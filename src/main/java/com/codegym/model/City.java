@@ -22,7 +22,7 @@ public class City {
 
     @Min(0)
     private long gdp;
-    private String description;
+    private String 6333333;
 
     public City() {
     }

@@ -84,6 +84,33 @@ public class MainController {
     @PostMapping("/delete/{id}")
     public ModelAndView deleteCity(@PathVariable Long id) {
         cityService.remove(id);
-        return new ModelAndView("list");
+        ModelAndView modelAndView = new ModelAndView("delete");
+        modelAndView.addObject("message", "Create new city successfully");
+        return modelAndView;
+    }
+
+    @GetMapping("/edit/{id}")
+    public ModelAndView showFormEdit(@PathVariable Long id) {
+        City city = cityService.findById(id);
+        if (city != null) {
+            ModelAndView modelAndView = new ModelAndView("edit");
+            modelAndView.addObject(city);
+            return modelAndView;
+        }
+        return new ModelAndView("error");
+    }
+
+    @PostMapping("/edit/{id}")
+    public ModelAndView editCity(@PathVariable Long id) {
+        City city = cityService.findById(id);
+        try {
+            cityService.save(city);
+            ModelAndView modelAndView = new ModelAndView("edit");
+            modelAndView.addObject("message", "Edit city successfully");
+            return modelAndView;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+              return new ModelAndView("error");
     }
 }
